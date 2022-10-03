@@ -1,0 +1,21 @@
+{
+  "name": "feedback",
+  "version": "1.0.0",
+  "description": "anomynous feedback",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "feedback"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3"
+  }
+}

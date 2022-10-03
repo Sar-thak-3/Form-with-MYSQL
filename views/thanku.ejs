@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thankyou</title>
+    <link rel="stylesheet" href="thankustyle.css">
+</head>
+<body>
+    <table id="table">
+        <thead>
+            <th>ID</th> 
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Subject</th>
+            <th>Course Code</th>
+            <th>Why Choose</th>
+            <th>Knowledge Level</th>
+            <th>Effort Level</th>
+            <th>At End</th>
+            <th>Communication</th>
+            <th>Recommendation</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="body">
+        </tbody>
+    </table>
+
+    <P>THANK YOU FOR SUMBITTING THE RESPONSE</P>
+    <p><a href="/">Submit another response</a></p>
+
+    <%- include('form.ejs') %>
+
+    <script>
+        fetch(`http://127.0.0.1:5000/thankuu/` , {
+            method: 'GET'
+        }).then((res) => {
+            if(!res.ok){
+                throw Error(res.statusText);
+            }
+            console.log(res)
+            return res.json()
+            }).
+            then((res)=>{
+                insertData(res);
+            })
+            .catch((err)=>console.log(err));
+
+        let tableBody = document.getElementById('body')
+        function insertData(data){
+            data.forEach((element) => {
+                let tr = document.createElement("tr");
+                let col1 = document.createElement("td");
+                col1.innerText = element.id;
+                tr.appendChild(col1);
+                let col2 = document.createElement("td");
+                col2.innerText = element.firstname;
+                tr.appendChild(col2);
+                let col3 = document.createElement("td");
+                col3.innerText = element.lastname;
+                tr.appendChild(col3);
+                let col4 = document.createElement("td");
+                col4.innerText = element.sub;
+                tr.appendChild(col4);
+                let col5 = document.createElement("td");
+                col5.innerText = element.coursecode;
+                tr.appendChild(col5);
+                let col6 = document.createElement("td");
+                col6.innerText = element.choose;
+                tr.appendChild(col6);
+                let col7 = document.createElement("td");
+                col7.innerText = element.knowledgelevel;
+                tr.appendChild(col7);
+                let col8 = document.createElement("td");
+                col8.innerText = element.effortlevel;
+                tr.appendChild(col8);
+                let col9 = document.createElement("td");
+                col9.innerText = element.knowledgelevelatend;
+                tr.appendChild(col9);
+                let col10 = document.createElement("td");
+                col10.innerText = element.communication;
+                tr.appendChild(col10);
+                let col11 = document.createElement("td");
+                col11.innerText = element.recommendation;
+                tr.appendChild(col11);
+                let col12 = document.createElement('button');
+                col12.innerHTML = `<button onclick='deleteRow(${element.id})'>Delete</button>`;
+                tr.appendChild(col12);
+                tableBody.appendChild(tr);
+            })
+        }
+
+        function deleteRow(id){
+            fetch(`http://127.0.0.1:5000/thankuu/${id}` , {
+                method: 'DELETE'
+            })
+            .then((res)=>{
+                console.log(res);
+                location.reload();
+                return res.json()
+            })
+            .then((data) => {
+
+                console.log(data);
+            })
+            .catch((err)=>console.log(err));
+        }
+    </script>
+</body>
+</html>
